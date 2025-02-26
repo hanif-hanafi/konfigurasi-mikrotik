@@ -1,0 +1,78 @@
+*Merubah Identitas/ nama RouterOS
+------------------------
+/system identity set name=MyRouter
+
+*Menambahkan IP dhcp-client
+--------------------------
+/ip dhcp-client add interface=ether1 disabled=no
+/ip address print
+
+*Membuat IP address ether2 & ether3
+--------------------------
+/ip address add interface=ether2 address=192.168.10.1/24 disable=no
+/ip address add interface=ether3 address=192.168.20.1/24 disable=no
+/ip address print
+
+*Menghapus IP address
+---------------------
+**contoh kasus di id number 2
+/ip address remove number=2
+
+*Setting DNS server
+===================
+/ip dns set servers=8.8.8.8
+/ip dns print
+
+Membuat user name
+==================
+izin akses = 
+full --> admin
+read --> cuma bisa melihat konfigurasi
+write --> cuma bisa menkonfigurasi
+
+/user add name=wahyu group=read password=password
+/user add name=januar group=full password=wahyu123!
+
+* untuk kembali ke mode login
+CTRL-D
+
+Membuat password admin RouterOS
+-------------------------------
+/password
+old password (masukan password lama)
+new password (password baru)
+confirm password ( ulangi password baru)
+
+Menghapus user di RouterOS
+--------------------------
+/user remove januar
+
+
+Setting DHCP-Server
+===================
+/ip dhcp-server setup
+
+	Select interface to run DHCP server on 
+
+	dhcp server interface: ether2
+	Select network for DHCP addresses 
+
+	dhcp address space: 192.168.88.0/24
+	Select gateway for given network 
+
+	gateway for dhcp network: 192.168.88.1
+	Select pool of ip addresses given out by DHCP server 
+
+	addresses to give out: 192.168.88.10-192.168.88.20
+	Select DNS servers 
+
+	dns servers: 192.168.100.1
+	Select lease time 
+
+	lease time: 10m
+
+
+
+Firewall / NAT / Sharing Internet
+==============/
+/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade
